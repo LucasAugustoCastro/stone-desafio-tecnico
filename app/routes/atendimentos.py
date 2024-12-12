@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+from marshmallow import ValidationError
 
 from app.controllers.atendimentos import Atendimentos
 from app.schema.atendimentos import AtendimentoSchema
@@ -11,3 +12,16 @@ def get_atendimentos():
     atendimentos = Atendimentos()
     atendimentos = atendimentos.listar_atendimentos(filters)
     return jsonify(AtendimentoSchema().dump(atendimentos, many=True))
+
+@api.route('', methods=['POST'])
+def create_atendimento():
+    try:
+        data = request.get_json()
+        atendimento_data = AtendimentoSchema().load(data)
+        atendimentos = Atendimentos()
+        atendimento = atendimentos.criar_atendimento(atendimento_data)
+        return jsonify(AtendimentoSchema().dump(atendimento)), 201
+    except KeyError as e:
+      return jsonify({'error': f'Missing field: {str(e)}'}), 400
+    except ValidationError as err:
+        return jsonify(err.messages), 400
