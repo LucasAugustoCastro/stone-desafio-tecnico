@@ -1,9 +1,11 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from flask_jwt_extended import JWTManager
 
 db = SQLAlchemy()
 ma = Marshmallow()
+jwt = JWTManager()
 
 def create_app():
     app = Flask(__name__)
@@ -11,12 +13,11 @@ def create_app():
 
     db.init_app(app)
     ma.init_app(app)
-
+    jwt.init_app(app)
     with app.app_context():
-        from .routes import atendimentos
-        app.register_blueprint(atendimentos.api)
-
-        # Create database tables
-        # db.create_all()
+      from .routes import atendimentos, usuarios, auth
+      app.register_blueprint(atendimentos.api)
+      app.register_blueprint(usuarios.api)
+      app.register_blueprint(auth.api)
 
     return app
