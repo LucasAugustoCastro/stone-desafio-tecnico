@@ -24,3 +24,17 @@ class Atendimentos():
       db.session.rollback()
       raise ValueError("Erro de integridade no banco de dados.")
     return data
+
+  def atualizar_atendimento(self, id, data):
+    atendimento:Atendimento = Atendimento.query.get(id)
+    if not atendimento:
+        raise ValueError("Atendimento não encontrado.")
+    for attr in data:
+        if hasattr(atendimento, attr):
+            setattr(atendimento, attr, data[attr])
+    try:
+        db.session.commit()
+        return atendimento
+    except IntegrityError:
+        db.session.rollback()
+        raise ValueError("Erro de integridade no banco de dados.")

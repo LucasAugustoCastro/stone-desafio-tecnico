@@ -3,7 +3,6 @@ from app import db
 class Atendimento(db.Model):
   # __tablename__ == 'atendimento'
   id = db.Column(db.Integer, primary_key=True)
-  id_atendimento = db.Column(db.Integer, nullable=False)
   id_cliente = db.Column(db.Integer, nullable=False)
   angel = db.Column(db.String(50), nullable=False)
   polo = db.Column(db.String(50), nullable=False)

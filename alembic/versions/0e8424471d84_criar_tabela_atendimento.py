@@ -22,7 +22,6 @@ def upgrade() -> None:
     op.create_table(
         'atendimento',
         sa.Column('id', sa.Integer, primary_key=True),
-        sa.Column('id_atendimento', sa.Integer, nullable=False),
         sa.Column('id_cliente', sa.Integer, nullable=False),
         sa.Column('angel', sa.String(length=255), nullable=False),
         sa.Column('polo', sa.String(length=255), nullable=False),

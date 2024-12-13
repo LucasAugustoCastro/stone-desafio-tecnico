@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from marshmallow import ValidationError
 
 from app.controllers.atendimentos import Atendimentos
-from app.schema.atendimentos import AtendimentoSchema
+from app.schema.atendimentos import AtendimentoSchema, AtendimentoPatchSchema
 
 api = Blueprint('atendimento', __name__, url_prefix='/atendimentos')
 
@@ -21,6 +21,19 @@ def create_atendimento():
         atendimentos = Atendimentos()
         atendimento = atendimentos.criar_atendimento(atendimento_data)
         return jsonify(AtendimentoSchema().dump(atendimento)), 201
+    except KeyError as e:
+      return jsonify({'error': f'Missing field: {str(e)}'}), 400
+    except ValidationError as err:
+        return jsonify(err.messages), 400
+
+@api.route('/<int:id>', methods=['PATCH'])
+def update_atendimento(id):
+    try:
+        data = request.get_json()
+        atendimento_data = AtendimentoPatchSchema().load(data)
+        atendimento = Atendimentos()
+        atendimento = atendimento.atualizar_atendimento(id, atendimento_data)
+        return jsonify(AtendimentoSchema().dump(atendimento))
     except KeyError as e:
       return jsonify({'error': f'Missing field: {str(e)}'}), 400
     except ValidationError as err:
