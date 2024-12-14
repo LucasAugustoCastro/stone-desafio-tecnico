@@ -4,8 +4,8 @@ class Atendimentos():
   def __init__(self, repository:AtendimentoRepository):
     self.repository = repository
 
-  def listar_atendimentos(self, filters):
-    return self.repository.get_filtered(filters)
+  def listar_atendimentos(self, filters, page=1, per_page=10, order_by_id=None):
+    return self.repository.get_filtered(filters, page, per_page, order_by_id)
 
   def criar_atendimento(self, data):
     self.repository.add(data)

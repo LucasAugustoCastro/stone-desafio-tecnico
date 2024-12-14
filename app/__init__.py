@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager
@@ -10,7 +11,7 @@ jwt = JWTManager()
 def create_app():
     app = Flask(__name__)
     app.config.from_object('app.config.Config')
-
+    CORS(app, supports_credentials=True)
     db.init_app(app)
     ma.init_app(app)
     jwt.init_app(app)

@@ -2,6 +2,7 @@ from app import db
 from app.models.atendimentos import Atendimento
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
+from sqlalchemy import asc, desc
 
 
 class AtendimentoRepository:
@@ -43,7 +44,7 @@ class AtendimentoRepository:
       self.session.rollback()
       raise
 
-  def get_filtered(self, filters):
+  def get_filtered(self, filters, page=1, per_page=10, order_by_id=None):
     query = Atendimento.query
     if 'tecnico' in filters:
       query = query.filter_by(angel=filters['tecnico'])
@@ -53,4 +54,9 @@ class AtendimentoRepository:
       query = query.filter(Atendimento.data_limite.between(filters['data_limite_start'], filters['data_limite_end']))
     if 'data_de_atendimento_start' in filters and 'data_de_atendimento_end' in filters:
       query = query.filter(Atendimento.data_de_atendimento.between(filters['data_de_atendimento_start'], filters['data_de_atendimento_end']))
-    return query.all()
+    if order_by_id:
+      if order_by_id == 'asc':
+        query = query.order_by(asc(Atendimento.id))
+      elif order_by_id == 'desc':
+        query = query.order_by(desc(Atendimento.id))
+    return query.paginate(page=page, per_page=per_page, error_out=False).items

@@ -7,7 +7,7 @@ class Atendimento(db.Model):
   angel = db.Column(db.String(50), nullable=False)
   polo = db.Column(db.String(50), nullable=False)
   data_limite = db.Column(db.Date, nullable=False)
-  data_de_atendimento = db.Column(db.Date, nullable=True)
+  data_de_atendimento = db.Column(db.DateTime, nullable=True)
 
   def to_dict(self):
     return {

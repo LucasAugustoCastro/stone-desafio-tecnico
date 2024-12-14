@@ -26,7 +26,7 @@ def upgrade() -> None:
         sa.Column('angel', sa.String(length=255), nullable=False),
         sa.Column('polo', sa.String(length=255), nullable=False),
         sa.Column('data_limite', sa.Date, nullable=False),
-        sa.Column('data_de_atendimento', sa.Date, nullable=False)
+        sa.Column('data_de_atendimento', sa.DateTime, nullable=True)
     )
 
 

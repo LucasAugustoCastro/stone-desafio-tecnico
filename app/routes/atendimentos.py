@@ -16,7 +16,10 @@ controller = Atendimentos(repository)
 @jwt_required()
 def get_atendimentos():
   filters = request.args.to_dict()
-  atendimentos = controller.listar_atendimentos(filters)
+  page = int(request.args.get('page', 1))
+  per_page = int(request.args.get('per_page', 10))
+  order_by_id = request.args.get('order_by_id', None)
+  atendimentos = controller.listar_atendimentos(filters, page, per_page, order_by_id)
   return jsonify(AtendimentoSchema().dump(atendimentos, many=True))
 
 @api.route('', methods=['POST'])

@@ -15,4 +15,4 @@ class AtendimentoPatchSchema(ma.Schema):
   angel = fields.String(required=False)
   polo = fields.String(required=False)
   data_limite = fields.Date(required=False)
-  data_de_atendimento = fields.Date(required=False)
+  data_de_atendimento = fields.DateTime(required=False)
