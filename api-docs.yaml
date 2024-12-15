@@ -6,116 +6,6 @@ servers:
   - url: http://127.0.0.1:5000/
     description: Desenvolvimento
 paths:
-  /atendimentos:
-    get:
-      tags:
-        - atendimentos      
-      summary: Listar atendimentos
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: page
-          in: query
-          schema:
-            type: integer
-        - name: per_page
-          in: query
-          schema:
-            type: integer
-        - name: order_by_id
-          in: query
-          schema:
-            type: string
-        - name: tecnico
-          in: query
-          schema:
-            type: string
-        - name: base_logistica
-          in: query
-          schema:
-            type: string
-        - name: data_limite_start
-          in: query
-          schema:
-            type: string
-        - name: data_limite_end
-          in: query
-          schema:
-            type: string
-        - name: data_de_atendimento_start
-          in: query
-          schema:
-            type: string
-        - name: data_de_atendimento_end
-          in: query
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Lista de atendimentos
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Atendimento'
-    post:
-      tags:
-        - atendimentos      
-      summary: Criar atendimento
-      security:
-        - bearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Atendimento'
-      responses:
-        '201':
-          description: Atendimento criado
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Atendimento'
-        '400':
-          description: Erro de validação
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /atendimentos/{id}:
-    patch:
-      tags:
-        - atendimentos      
-      summary: Atualizar atendimento
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AtendimentoPatch'
-      responses:
-        '200':
-          description: Atendimento atualizado
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Atendimento'
-        '400':
-          description: Erro de validação
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
   /auth/login:
     post:
       tags:
@@ -267,6 +157,117 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+
+  /atendimentos:
+    get:
+      tags:
+        - atendimentos      
+      summary: Listar atendimentos
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+        - name: order_by_id
+          in: query
+          schema:
+            type: string
+        - name: tecnico
+          in: query
+          schema:
+            type: string
+        - name: base_logistica
+          in: query
+          schema:
+            type: string
+        - name: data_limite_start
+          in: query
+          schema:
+            type: string
+        - name: data_limite_end
+          in: query
+          schema:
+            type: string
+        - name: data_de_atendimento_start
+          in: query
+          schema:
+            type: string
+        - name: data_de_atendimento_end
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de atendimentos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Atendimento'
+    post:
+      tags:
+        - atendimentos      
+      summary: Criar atendimento
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AtendimentoPost'
+      responses:
+        '201':
+          description: Atendimento criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Atendimento'
+        '400':
+          description: Erro de validação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /atendimentos/{id}:
+    patch:
+      tags:
+        - atendimentos      
+      summary: Atualizar atendimento
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AtendimentoPatch'
+      responses:
+        '200':
+          description: Atendimento atualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Atendimento'
+        '400':
+          description: Erro de validação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   schemas:
     Usuario:
@@ -299,6 +300,21 @@ components:
       properties:
         id:
           type: integer
+        id_cliente:
+          type: integer
+        angel:
+          type: string
+        polo:
+          type: string
+        data_limite:
+          type: string
+          format: date
+        data_de_atendimento:
+          type: string
+          format: date-time
+    AtendimentoPost:
+      type: object
+      properties:
         id_cliente:
           type: integer
         angel:
