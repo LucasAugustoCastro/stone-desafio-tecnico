@@ -72,7 +72,6 @@ Neste primeiro momento o foco será a automatização dos indicadores da operaç
    ```sh
    git clone https://github.com/LucasAugustoCastro/stone-desafio-tecnico.git
    cd stone-desafio-tecnico
-2. Configure as variáveis de ambiente no arquivo .env (se necessário).
 3. Construa e inicie os containers Docker:
     ```
     docker-compose up --build
