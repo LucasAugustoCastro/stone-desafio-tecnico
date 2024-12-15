@@ -179,7 +179,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Usuario'
+              $ref: '#/components/schemas/UsuarioPost'
       responses:
         '201':
           description: Usuário criado
@@ -277,6 +277,15 @@ components:
         nome:
           type: string
         email:
+          type: string
+    UsuarioPost:
+      type: object
+      properties:
+        nome:
+          type: string
+        email:
+          type: string
+        senha:
           type: string
     UsuarioPatch:
       type: object
